@@ -1,0 +1,13 @@
+ algo@_global_=grpo
+
+ algo@_global_=reinforce
+ CartPole-v1 的最大奖励（最高分）是固定的：
+🟩 CartPole-v1 的最大总奖励 = 500
+
+因为在 Gym / Gymnasium 中，CartPole-v1 任务设置了：
+
+最长 episode 长度：500 步
+
+若小车杆子保持稳定，不掉、电杆角度不超限，则每一步奖励 = 1
+
+所以最高分就是保持 500 步不失败 → 总奖励上限 = 500

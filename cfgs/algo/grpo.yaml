@@ -3,19 +3,18 @@ defaults:
 
 #experiment
 
-experiment: PPO
-save_snapshot: true
+experiment: GRPO
+
 
 
 algo:
-  _target_: algorithms.ppo.PPO
+  _target_: algorithms.grpo.GRPO
   state_dim: ???
   action_dim: ??? # 之后在代码中指定
   hidden_dim: 128
   gamma: 0.9
   actor_lr: 1e-4
-  critic_lr: 5e-3
-  lmbda: 1
+  lmbda: 0.9
   epochs: 10
   eps: 0.2
   device: ${device} #变量引用的语法，通常用于Hydra配置系统中，表示device这个键的值会引用当前配置中另一个名为device的变量的值，或者引用其他噢诶之文件在定义的device变量

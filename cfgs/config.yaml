@@ -1,0 +1,40 @@
+defaults:
+  - _self_
+  - algo@_global_: ppo   #当配置中用 @_global_ 声明变量（如 algo@_global_: ppo）时，该变量的 “完整路径” 是 algo@_global_，而非简单的 algo。显式使用 algo@_global_=grpo 才能正确匹配全局变量的路径，实现覆盖。
+  - override hydra/launcher: submitit_local
+
+
+
+experiment: exp
+
+seed: 0
+device: cuda:0
+use_tb: True
+use_wandb: True
+log: log
+save_video: True
+
+
+
+task: Pendulum-v1
+train_episodes: 1000
+eval_episodes: 10
+max_steps: 200
+batch_size: 32
+
+
+hydra:
+  run:
+    dir: ${log}/${task}/${experiment}/${now:%Y.%m.%d}/${now:%H%M%S}
+  sweep:
+    dir: ./exp/${now:%Y.%m.%d}${now:%H%M%S}_{experiment}
+    subdir: ${hydra.job.num}
+  launcher:
+    timeout_min: 4300
+    cpus_per_task: 10
+    gpus_per_node: 1
+    tasks_per_node: 1
+    mem_gb: 160
+    nodes: 1
+    submitit_folder: ./exp/${now:%Y.%m.%d}/${now:%H%M%S}_{experiment}/.slurm
+
